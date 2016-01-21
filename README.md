@@ -1,4 +1,12 @@
 abcplayer
 =========
 
-Interprets and plays back music files in ABC format with a MIDI sequencer
+Interprets and plays back music files in [ABC Notation](https://en.wikipedia.org/wiki/ABC_notation) with a MIDI sequencer.
+
+To play some tunes:
+
+```bash
+find ./src -name "*.java" -and -not -name "*Test.java" | xargs javac -d ./bin
+java -classpath ./bin player.Main sample_abc/invention.abc
+```
+
