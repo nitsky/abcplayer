@@ -31,8 +31,9 @@ public class Measure implements MusicalElement {
   }
 
   public void addChords(List<Chord> chordList) {
-    for (Chord chord : chordList)
+    for (Chord chord : chordList) {
       chords.add(chord);
+    }
   }
 
   public List<Chord> getChords() {
@@ -70,20 +71,27 @@ public class Measure implements MusicalElement {
   @Override
   public String toString() {
     StringBuilder s = new StringBuilder("");
-    if (this.repeatType == RepeatType.FIRST_ENDING)
+    if (this.repeatType == RepeatType.FIRST_ENDING) {
       s.append("[1 ");
-    else if (this.repeatType == RepeatType.SECOND_ENDING)
+    }
+    else if (this.repeatType == RepeatType.SECOND_ENDING) {
       s.append("[2 ");
-    else if (this.repeatType == RepeatType.BEGIN)
+    }
+    else if (this.repeatType == RepeatType.BEGIN) {
       s.append(": ");
-    for (Chord chord : this.chords)
+    }
+    for (Chord chord : this.chords) {
       s.append(chord.toString());
-    if (this.repeatType == RepeatType.FIRST_ENDING || this.repeatType == RepeatType.END)
+    }
+    if (this.repeatType == RepeatType.FIRST_ENDING || this.repeatType == RepeatType.END) {
       s.append(":| ");
-    else if (this.repeatType == RepeatType.SECTION_END)
+    }
+    else if (this.repeatType == RepeatType.SECTION_END) {
       s.append("|] ");
-    else
+    }
+    else {
       s.append("| ");
+    }
     return s.toString();
   }
 

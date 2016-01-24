@@ -33,10 +33,12 @@ public class Note implements MusicalElement {
   }
 
   public int midiValue() {
-    if (this.pitch != 'z')
+    if (this.pitch != 'z') {
       return scale[this.pitch - 'A'] + this.accidental + (12 * this.octave) + 60;
-    else
+    }
+    else {
       throw new IllegalArgumentException("Cannot get midi value for rest");
+    }
   }
 
   private static final String[] valToString = {
@@ -113,22 +115,27 @@ public class Note implements MusicalElement {
     }
 
     String name;
-    if (this.pitch != 'z')
+    if (this.pitch != 'z') {
       name = valToString[scale[this.pitch - 'A']];
-    else
+    }
+    else {
       name = "z";
-    if (oct == 1) name = name.toLowerCase();
+    }
+    if (oct == 1) {
+      name = name.toLowerCase();
+    }
 
     return prefix + name + suffix + this.length.toString();
   }
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Note))
+    if (!(other instanceof Note)) {
       return false;
+    }
     Note otherNote = (Note)other;
     return this.pitch == otherNote.getPitch() && this.accidental == otherNote.getAccidental() &&
-      this.octave == otherNote.getOctave() && this.length.equals(otherNote.getLength());
+    this.octave == otherNote.getOctave() && this.length.equals(otherNote.getLength());
   }
 
 }

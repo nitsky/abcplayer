@@ -10,30 +10,30 @@ import java.util.LinkedHashMap;
 import java.util.regex.*;
 
 /**
- * A lexer takes a string and splits it into tokens that are meaningful to a
- * parser.
- */
+* A lexer takes a string and splits it into tokens that are meaningful to a
+* parser.
+*/
 public class Lexer {
 
   private String string;
 
   /**
-   * Creates the lexer over the passed string.
-   *
-   * @param string
-   *            The string to tokenize.
-   */
+  * Creates the lexer over the passed string.
+  *
+  * @param string
+  *            The string to tokenize.
+  */
   public Lexer(String string) {
     this.string = string;
   }
 
   /**
-   * generateTokens
-   * Generates the list of Tokens from the string passed in the
-   * constructor. Throws an IllegalArgumentException if the input
-   * has illegal characters in it.
-   * @return The list of tokens extracted from the expression string
-   */
+  * generateTokens
+  * Generates the list of Tokens from the string passed in the
+  * constructor. Throws an IllegalArgumentException if the input
+  * has illegal characters in it.
+  * @return The list of tokens extracted from the expression string
+  */
   public List<Token> generateTokens() {
 
     List<Token> result = new ArrayList<Token>();
@@ -69,34 +69,37 @@ public class Lexer {
       masterPatternStringBuilder.append('(');
       masterPatternStringBuilder.append(patternMap.get(tokenType).pattern());
       masterPatternStringBuilder.append(')');
-      if (iterator.hasNext())
+      if (iterator.hasNext()) {
         masterPatternStringBuilder.append('|');
+      }
     }
 
     String masterPatternString = masterPatternStringBuilder.toString();
 
     /* Verify that there are no invalid characters by removing all matchable
-     * characters in the input and verifying that the result is the empty string.
-     */
+    * characters in the input and verifying that the result is the empty string.
+    */
     String leftoverString = input.replaceAll("[ \t]","").replaceAll(masterPatternString, "").replaceAll("\r\n|\n","");
-    if (!leftoverString.equals(""))
+    if (!leftoverString.equals("")) {
       throw new IllegalArgumentException("Invalid Characters Detected In Input: " + leftoverString);
+    }
 
     Pattern masterPattern = Pattern.compile(masterPatternString);
     Matcher masterMatcher = masterPattern.matcher(input);
 
     /* For each token matched, determine its type by running it
-     * through each pattern until the matching one is found, and
-     * add it to the result
-     */
+    * through each pattern until the matching one is found, and
+    * add it to the result
+    */
     while (masterMatcher.find()) {
       String string = masterMatcher.group();
-      for (TokenType tokenType : patternMap.keySet())
+      for (TokenType tokenType : patternMap.keySet()) {
         if (patternMap.get(tokenType).matcher(string).matches() == true) {
           Token newToken = new Token(tokenType, string);
           result.add(newToken);
           break;
         }
+      }
     }
 
     return result;

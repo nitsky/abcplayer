@@ -11,8 +11,9 @@ public class NoteLengthVisitorTest {
   public void noteLengthVisitorSimpleTest() {
 
     Voice voice = new Voice(new Measure());
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) {
       voice.getMeasures().get(0).addChord(new Chord(new Note('A',0,0, new Meter(2,1))));
+    }
 
     Piece piece = new Piece();
     piece.addVoice(voice);

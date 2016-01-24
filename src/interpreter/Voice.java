@@ -49,9 +49,10 @@ public class Voice implements MusicalElement {
     @Override
     public String toString() {
       StringBuilder s = new StringBuilder("Voice: " + this.getName() + "\n");
-        for (Measure measure : this.measures)
-          s.append(measure.toString());
-            return s.toString();
+      for (Measure measure : this.measures) {
+        s.append(measure.toString());
+      }
+      return s.toString();
     }
 
 }

@@ -1,18 +1,18 @@
 package sound;
 
 /**
- * Pitch represents the frequency of a musical note.
- * Standard music notation represents pitches by letters: A, B, C, ..., G.
- * Pitches can be sharp or flat, or whole octaves up or down from these primitive
- * generators.
- *
- * For example:
- *   new Pitch('C') makes middle C.
- *   new Pitch('C').transpose(1) makes C-sharp.
- *   new Pitch('F').transpose(-2) makes E-flat.
- *   new Pitch('C').transpose(OCTAVE) makes high C.
- *   new Pitch('C').transpose(-OCTAVE) makes low C.
- */
+* Pitch represents the frequency of a musical note.
+* Standard music notation represents pitches by letters: A, B, C, ..., G.
+* Pitches can be sharp or flat, or whole octaves up or down from these primitive
+* generators.
+*
+* For example:
+*   new Pitch('C') makes middle C.
+*   new Pitch('C').transpose(1) makes C-sharp.
+*   new Pitch('F').transpose(-2) makes E-flat.
+*   new Pitch('C').transpose(OCTAVE) makes high C.
+*   new Pitch('C').transpose(-OCTAVE) makes low C.
+*/
 public class Pitch {
   private final int value;
   private final int accidental;
@@ -47,15 +47,16 @@ public class Pitch {
   }
 
   /**
-   * Make a Pitch.
-   * @requires c in {'A',...,'G'}
-   * @returns Pitch named c in the middle octave of the piano keyboard.
-   * For example, new Pitch('C') constructs middle C
-   */
+  * Make a Pitch.
+  * @requires c in {'A',...,'G'}
+  * @returns Pitch named c in the middle octave of the piano keyboard.
+  * For example, new Pitch('C') constructs middle C
+  */
   public Pitch(char c) {
     int index = c - 'A';
-    if (index < 0 || index >= scale.length)
+    if (index < 0 || index >= scale.length) {
       throw new IllegalArgumentException(c + " must be in the range A-G");
+    }
 
     this.value = scale[index];
     this.accidental = 0;
@@ -64,35 +65,35 @@ public class Pitch {
   }
 
   /**
-   * Number of pitches in an octave.
-   */
+  * Number of pitches in an octave.
+  */
   public static final int OCTAVE = 12;
 
   /**
-   * @return pitch made by adding semitonesUp sharps to this pitch,
-   * if the argument is positive, or -semitonesUp flats, if the
-   * argument is negative.  For example, E transposed by -1
-   * semitone is E flat; E transposed by 1 semitone is E sharp.
-   */
+  * @return pitch made by adding semitonesUp sharps to this pitch,
+  * if the argument is positive, or -semitonesUp flats, if the
+  * argument is negative.  For example, E transposed by -1
+  * semitone is E flat; E transposed by 1 semitone is E sharp.
+  */
   public Pitch accidentalTranspose(int semitonesUp) {
     return new Pitch(value, accidental + semitonesUp, octave);
   }
 
   /**
-   * @return pitch made by transposing this pitch by octavesUp
-   * octaves up.  For example, transposing E up by 1 octave produces
-   * E'; transposing E down by 1 octave produces E, .
-   */
+  * @return pitch made by transposing this pitch by octavesUp
+  * octaves up.  For example, transposing E up by 1 octave produces
+  * E'; transposing E down by 1 octave produces E, .
+  */
   public Pitch octaveTranspose(int octavesUp) {
     return new Pitch(value, accidental, octave + octavesUp);
   }
 
   /**
-   * @return pitch made by transposing this pitch up by semitonesUp
-   * semitones, as if on a minor scale starting at this pitch. For
-   * example, transposing E up by 3 semitones will produce G;
-   * transposing F up by 5 semitones will produce B flat.
-   */
+  * @return pitch made by transposing this pitch up by semitonesUp
+  * semitones, as if on a minor scale starting at this pitch. For
+  * example, transposing E up by 3 semitones will produce G;
+  * transposing F up by 5 semitones will produce B flat.
+  */
   public Pitch transpose(int semitonesUp) {
     int newValue = value + semitonesUp;
     int newOctave = octave;
@@ -111,12 +112,12 @@ public class Pitch {
     if (!isValid(newValue)) {
       int interval = semitonesUp % OCTAVE;
       if (interval == 3
-          || interval == 5
-          || interval == 8
-          || interval == 10) {
+      || interval == 5
+      || interval == 8
+      || interval == 10) {
         newValue++;
         newAccidental--;
-          }
+      }
       else {
         newValue--;
         newAccidental++;
@@ -127,39 +128,41 @@ public class Pitch {
   }
 
   /**
-   * @return number of semitones between this and that; i.e., n such
-   * that that.transpose(n).toMidiNote() == that.toMidiNote().
-   */
+  * @return number of semitones between this and that; i.e., n such
+  * that that.transpose(n).toMidiNote() == that.toMidiNote().
+  */
   public int difference(Pitch that) {
     return this.toMidiNote() - that.toMidiNote();
   }
 
   /**
-   *
-   * @return the midi note of this pitch
-   */
+  *
+  * @return the midi note of this pitch
+  */
   public int toMidiNote() {
     return this.value + this.accidental + (OCTAVE * this.octave) + 60;
   }
 
 
   /**
-   * @return true iff this pitch is lower than that pitch
-   */
+  * @return true iff this pitch is lower than that pitch
+  */
   public boolean lessThan(Pitch that) {
     return this.difference(that) < 0;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == null)
+    if (obj == null) {
       return false;
-    if (obj.getClass() != this.getClass())
+    }
+    if (obj.getClass() != this.getClass()) {
       return false;
+    }
     Pitch that = (Pitch) obj;
     return this.value == that.value
-      && this.accidental == that.accidental
-      && this.octave == that.octave;
+    && this.accidental == that.accidental
+    && this.octave == that.octave;
   }
 
   @Override
@@ -168,9 +171,9 @@ public class Pitch {
   }
 
   /**
-   * @return this pitch in abc music notation
-   *   (see http://www.walshaw.plus.com/abc/examples/)
-   */
+  * @return this pitch in abc music notation
+  *   (see http://www.walshaw.plus.com/abc/examples/)
+  */
   @Override
   public String toString() {
     String suffix = "";
@@ -200,7 +203,9 @@ public class Pitch {
     }
 
     String name = valToString[v];
-    if (oct == 1) name = name.toLowerCase();
+    if (oct == 1) {
+      name = name.toLowerCase();
+    }
 
     return prefix + name + suffix;
   }
@@ -215,6 +220,6 @@ public class Pitch {
 
   private static final boolean isValid(int value) {
     return value == 0 || value == 2 || value == 4 || value == 5
-      || value == 7 || value == 9 || value == 11;
+    || value == 7 || value == 9 || value == 11;
   }
 }

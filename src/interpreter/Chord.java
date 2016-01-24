@@ -25,8 +25,9 @@ public class Chord implements MusicalElement {
   }
 
   public void addNotes(List<Note> noteList) {
-    for (Note note : noteList)
+    for (Note note : noteList) {
       notes.add(note);
+    }
   }
 
   public List<Note> getNotes() {
@@ -35,9 +36,11 @@ public class Chord implements MusicalElement {
 
   public Meter getLength() {
     Meter result = new Meter(0,1);
-    for (Note note : this.notes)
-      if (note.getLength().compute() > result.compute())
+    for (Note note : this.notes) {
+      if (note.getLength().compute() > result.compute()) {
         result = note.getLength();
+      }
+    }
     return result;
   }
 
@@ -48,10 +51,12 @@ public class Chord implements MusicalElement {
   @Override
   public String toString() {
     StringBuilder s = new StringBuilder("");
-    if (this.notes.size() > 1)
+    if (this.notes.size() > 1) {
       s.append("[");
-    for (Note note : notes)
+    }
+    for (Note note : notes) {
       s.append(note.toString() + " ");
+    }
     if (this.notes.size() > 1) {
       s.delete(s.length()-1, s.length()); // remove the space from the last note in the chord
       s.append("] ");
@@ -61,8 +66,9 @@ public class Chord implements MusicalElement {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Chord))
+    if (!(other instanceof Chord)) {
       return false;
+    }
     Chord otherChord = (Chord)other;
     return this.notes.equals(otherChord.getNotes());
   }

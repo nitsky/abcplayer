@@ -135,8 +135,9 @@ public class Piece implements MusicalElement {
       s.append("Voice: " + voice.getName() + "\n");
     s.append("Key Signature: " + this.keySignature.toString() + "\n");
 
-    for (Voice voice : voices)
+    for (Voice voice : voices) {
       s.append(voice.toString() + "\n");
+    }
 
     return s.toString();
 

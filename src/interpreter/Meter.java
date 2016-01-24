@@ -37,7 +37,7 @@ public class Meter {
 
   public Meter add(Meter other) {
     return new Meter(this.getNumerator() * other.getDenominator() + other.getNumerator() * this.getDenominator(),
-        this.getDenominator() * other.getDenominator() );
+    this.getDenominator() * other.getDenominator() );
   }
 
   public Meter multiply(Meter other) {
@@ -51,8 +51,9 @@ public class Meter {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Meter))
+    if (!(other instanceof Meter)) {
       return false;
+    }
     Meter otherMeter = (Meter)other;
     return ( (this.numerator == otherMeter.getNumerator()) && (this.denominator == otherMeter.getDenominator()) );
   }

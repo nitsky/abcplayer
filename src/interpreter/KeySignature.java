@@ -22,9 +22,9 @@ public class KeySignature {
   private KeySignatureType type;
 
   /**
-   * Creates a new KeySignature object with the key specified by key
-   * @param key   The key to use for the KeySignature
-   */
+  * Creates a new KeySignature object with the key specified by key
+  * @param key   The key to use for the KeySignature
+  */
   public KeySignature(String key) {
 
     boolean found = false;
@@ -47,12 +47,15 @@ public class KeySignature {
 
           found = true;
 
-          if (this.getXMLTagValue("type", keySignature).equals("Sharp"))
+          if (this.getXMLTagValue("type", keySignature).equals("Sharp")) {
             this.type = KeySignatureType.SHARP;
-          else if (this.getXMLTagValue("type", keySignature).equals("Flat"))
+          }
+          else if (this.getXMLTagValue("type", keySignature).equals("Flat")) {
             this.type = KeySignatureType.FLAT;
-          else
+          }
+          else {
             throw new IllegalArgumentException("Error in keysignature specification");
+          }
 
           NodeList noteNodes = keySignature.getElementsByTagName("note");
           for (int j = 0; j < noteNodes.getLength(); j++) {
@@ -79,16 +82,18 @@ public class KeySignature {
   }
 
   /**
-   * processNote
-   * Applies the key signature to the specified note
-   * @param note     The note to process
-   */
+  * processNote
+  * Applies the key signature to the specified note
+  * @param note     The note to process
+  */
   public void processNote(Note note) {
     if (this.notes.contains(note.getPitch())) {
-      if (this.type == KeySignatureType.SHARP)
+      if (this.type == KeySignatureType.SHARP) {
         note.setAccidental(note.getAccidental() + 1);
-      else
+      }
+      else {
         note.setAccidental(note.getAccidental() - 1);
+      }
     }
   }
 

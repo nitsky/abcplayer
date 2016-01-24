@@ -11,27 +11,25 @@ import org.junit.Test;
 public class KeySignatureTest {
 
   /*
-   * Test to confirm that there are no errors in keysignature.xml
-   * by applying each key signature to all notes in the scale
-   * and confirming that the result is the corresponding major or
-   * minor scale.
-   */
+  * Test to confirm that there are no errors in keysignature.xml
+  * by applying each key signature to all notes in the scale
+  * and confirming that the result is the corresponding major or
+  * minor scale.
+  */
 
   @Test
   public void KeySignatureTestAll() {
 
     String[] keys = new String[] {
-
       "C", "G", "D", "A", "E", "B", "F#", "C#",
-        "F", "Bb", "Eb", "Ab", "Db", "Gb", "Cb",
-        "Am", "Em", "Bm", "F#m", "C#m", "G#m", "D#m", "A#m",
-        "Dm", "Gm", "Cm", "Fm", "Bbm", "Ebm", "Abm"
-
+      "F", "Bb", "Eb", "Ab", "Db", "Gb", "Cb",
+      "Am", "Em", "Bm", "F#m", "C#m", "G#m", "D#m", "A#m",
+      "Dm", "Gm", "Cm", "Fm", "Bbm", "Ebm", "Abm"
     };
 
     List<Character> notes = new ArrayList<Character>(Arrays.asList(
-          'C', 'D', 'E', 'F', 'G', 'A', 'B'
-          ));
+    'C', 'D', 'E', 'F', 'G', 'A', 'B'
+    ));
 
     for (String key : keys){
 
@@ -41,18 +39,22 @@ public class KeySignatureTest {
 
       for (int i = start; i < start+7; i++) {
         Note note;
-        if (i < 7)
+        if (i < 7) {
           note = new Note(notes.get(i), 0, 0, new Meter(1, 1));
-        else
+        }
+        else {
           note = new Note(notes.get(i-7), 1, 0, new Meter(1, 1));
+        }
         keySignature.processNote(note);
         scale.add(note);
       }
 
-      if (key.charAt(key.length() - 1) == 'm')
+      if (key.charAt(key.length() - 1) == 'm') {
         assertMinorScale(scale);
-      else
+      }
+      else {
         assertMajorScale(scale);
+      }
 
     }
 

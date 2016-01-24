@@ -36,11 +36,12 @@ public class SequenceBuilderVisitor implements MusicalElementVisitor<Integer> {
       Measure measure = voice.getMeasures().get(i);
 
       // pass over a first ending if it has been visited
-      if (measure.getRepeatType() == RepeatType.FIRST_ENDING)
+      if (measure.getRepeatType() == RepeatType.FIRST_ENDING) {
         if (visitedEndings.contains(i)) {
           i ++;
           continue;
         }
+      }
 
       measure.accept(this);
 
@@ -63,9 +64,9 @@ public class SequenceBuilderVisitor implements MusicalElementVisitor<Integer> {
       // similarly if we hit an end repeat, backtrack
       // if we have not yet visited it
       else if (measure.getRepeatType() == RepeatType.END)
-        if (visitedEndings.contains(i))
+        if (visitedEndings.contains(i)) {
           i++;
-        else {
+        } else {
           visitedEndings.add(i);
           while (i > 0) {
             i--;
@@ -78,9 +79,10 @@ public class SequenceBuilderVisitor implements MusicalElementVisitor<Integer> {
             }
           }
         }
-      else
+      else {
         // otherwise the measure is normal so just keep chugging along
         i++;
+      }
     }
     return 0;
   }
